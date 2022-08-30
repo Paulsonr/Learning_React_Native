@@ -6,6 +6,7 @@ import {
   Button,
   TextInput,
   ScrollView,
+  FlatList,
 } from "react-native";
 import { IconButton } from "react-native-paper";
 
@@ -47,20 +48,27 @@ export default function App() {
         <Button title="Empty" onPress={onEmptyNotesHandler} />
       </View>
       <View style={styles.notesContainer}>
-        <ScrollView>
-          {notes.map((note, index) => (
-            <View style={styles.noteContainer}>
-              <Text style={styles.noteText}>{note}</Text>
-              {/* <Button title="Delete" /> */}
-              <IconButton
-                icon="delete"
-                iconColor="red"
-                size={20}
-                onPress={() => onDeleteSingleNote(index)}
-              />
-            </View>
-          ))}
-        </ScrollView>
+        <FlatList
+          data={notes}
+          renderItem={(item) => {
+            return (
+              <View style={styles.noteContainer}>
+                <Text style={styles.noteText}>{item.item}</Text>
+                {/* <Button title="Delete" /> */}
+                <IconButton
+                  icon="delete"
+                  iconColor="red"
+                  size={20}
+                  onPress={() => onDeleteSingleNote(item.index)}
+                />
+              </View>
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return item + index + "_key";
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
     </View>
   );
@@ -71,17 +79,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ccccc",
     paddingTop: 40,
-    paddingHorizontal: 15,
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
+    paddingHorizontal: 15,
   },
   inputContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingHorizontal: 15,
   },
   textInput: {
     backgroundColor: "#eee",
@@ -99,6 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+    marginHorizontal: 15,
   },
   noteText: {
     fontWeight: "bold",
