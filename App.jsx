@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { IconButton } from "react-native-paper";
 
 export default function App() {
@@ -40,18 +47,20 @@ export default function App() {
         <Button title="Empty" onPress={onEmptyNotesHandler} />
       </View>
       <View style={styles.notesContainer}>
-        {notes.map((note, index) => (
-          <View style={styles.noteContainer}>
-            <Text style={styles.noteText}>{note}</Text>
-            {/* <Button title="Delete" /> */}
-            <IconButton
-              icon="delete"
-              iconColor="red"
-              size={20}
-              onPress={() => onDeleteSingleNote(index)}
-            />
-          </View>
-        ))}
+        <ScrollView>
+          {notes.map((note, index) => (
+            <View style={styles.noteContainer}>
+              <Text style={styles.noteText}>{note}</Text>
+              {/* <Button title="Delete" /> */}
+              <IconButton
+                icon="delete"
+                iconColor="red"
+                size={20}
+                onPress={() => onDeleteSingleNote(index)}
+              />
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
