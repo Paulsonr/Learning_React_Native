@@ -1,47 +1,62 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, Modal, Button } from "react-native";
 import { IconButton } from "react-native-paper";
 
 export default function NotesInput({
+  inputNote,
   onInputHandler,
   onAddNotesHandler,
   onEmptyNotesHandler,
+  notesInputModalVisible,
+  closeNotesInputModalHandler,
 }) {
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        placeholder=" Type your notes..."
-        style={styles.textInput}
-        onChangeText={onInputHandler}
-      />
-      <View style={styles.inputActionsContainer}>
-        <IconButton
-          icon="plus"
-          iconColor="red"
-          size={20}
-          onPress={onAddNotesHandler}
-        />
-        <IconButton
-          icon="delete"
-          iconColor="red"
-          size={20}
-          onPress={onEmptyNotesHandler}
-        />
-        {/* <Pressable style={styles.button} onPress={onEmptyNotesHandler}>
+    <Modal visible={notesInputModalVisible} animationType="slide">
+      <View style={styles.modalContentContainer}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder=" Type your notes..."
+            style={styles.textInput}
+            value={inputNote}
+            onChangeText={onInputHandler}
+          />
+          <View style={styles.inputActionsContainer}>
+            <IconButton
+              icon="plus"
+              iconColor="red"
+              size={20}
+              onPress={onAddNotesHandler}
+            />
+            <IconButton
+              icon="delete"
+              iconColor="red"
+              size={20}
+              onPress={onEmptyNotesHandler}
+            />
+            {/* <Pressable style={styles.button} onPress={onEmptyNotesHandler}>
           <Text style={styles.btn_text}>{"Empty"}</Text>
         </Pressable> */}
-        {/* <Button title="Add" onPress={onAddNotesHandler} /> */}
+            {/* <Button title="Add" onPress={onAddNotesHandler} /> */}
+          </View>
+        </View>
+        <View style={styles.closeModalBtn}>
+          <Button title="Close" onPress={closeNotesInputModalHandler} />
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  modalContentContainer: {
     flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    marginHorizontal: 15,
+  },
+  inputContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 15,
   },
   textInput: {
     flex: 2,
@@ -70,5 +85,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+  },
+  closeModalBtn: {
+    marginTop: 20,
   },
 });
